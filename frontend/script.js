@@ -10,7 +10,7 @@
 // ──────────────────────────────────────────────
 // Replace this with your Render backend URL after deploying, e.g.:
 // const RENDER_URL = "https://diabetes-risk-api.onrender.com";
-const RENDER_URL = "https://YOUR-BACKEND-NAME.onrender.com";
+const RENDER_URL = "https://diabetes-risk-api-bopx.onrender.com";
 
 // Auto-detect: use localhost for development, Render URL for production
 const API_URL = window.location.hostname === "localhost" ||
