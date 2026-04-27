@@ -1,0 +1,463 @@
+/* ═══════════════════════════════════════════════
+   AI Diabetes Risk Predictor — Stylesheet
+   Design: dark glassmorphism with 8 px grid
+   ═══════════════════════════════════════════════ */
+
+/* ─── CSS Custom Properties (easy theme switching) ─── */
+:root {
+  /* Colours */
+  --clr-bg-start:    hsl(230, 35%, 7%);
+  --clr-bg-end:      hsl(260, 40%, 12%);
+  --clr-surface:     hsla(230, 30%, 14%, 0.65);
+  --clr-surface-alt: hsla(230, 25%, 18%, 0.50);
+  --clr-border:      hsla(230, 40%, 40%, 0.25);
+  --clr-text:        hsl(0, 0%, 94%);
+  --clr-text-muted:  hsl(230, 15%, 60%);
+  --clr-accent:      hsl(260, 100%, 70%);
+  --clr-accent-glow: hsla(260, 100%, 70%, 0.35);
+  --clr-success:     hsl(152, 70%, 50%);
+  --clr-success-bg:  hsla(152, 70%, 50%, 0.12);
+  --clr-danger:      hsl(0, 85%, 60%);
+  --clr-danger-bg:   hsla(0, 85%, 60%, 0.12);
+
+  /* Typography */
+  --font-family: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Spacing — 8 px grid */
+  --sp-1: 8px;
+  --sp-2: 16px;
+  --sp-3: 24px;
+  --sp-4: 32px;
+  --sp-5: 40px;
+  --sp-6: 48px;
+  --sp-8: 64px;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* Shadows */
+  --shadow-card: 0 8px 32px hsla(0, 0%, 0%, 0.35);
+
+  /* Transitions */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration: 0.3s;
+}
+
+/* ─── Reduced-motion preference ─── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Reset & base ─── */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family);
+  color: var(--clr-text);
+  background: linear-gradient(135deg, var(--clr-bg-start), var(--clr-bg-end));
+  min-height: 100vh;
+  line-height: 1.6;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ─── Background particles ─── */
+.bg-particles {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.bg-particles span {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--clr-accent-glow);
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: float 20s infinite ease-in-out alternate;
+}
+
+.bg-particles span:nth-child(1) { width: 320px; height: 320px; top: -5%;  left: -5%;  animation-delay: 0s; }
+.bg-particles span:nth-child(2) { width: 260px; height: 260px; top: 40%;  right: -8%; animation-delay: -4s; }
+.bg-particles span:nth-child(3) { width: 200px; height: 200px; bottom: 5%; left: 30%; animation-delay: -8s; }
+.bg-particles span:nth-child(4) { width: 180px; height: 180px; top: 20%;  left: 60%;  animation-delay: -12s; background: hsla(180, 80%, 55%, 0.2); }
+.bg-particles span:nth-child(5) { width: 140px; height: 140px; bottom: 25%; right: 20%; animation-delay: -16s; background: hsla(330, 80%, 60%, 0.15); }
+.bg-particles span:nth-child(6) { width: 240px; height: 240px; top: 60%;  left: 10%;  animation-delay: -6s; background: hsla(200, 80%, 50%, 0.15); }
+
+@keyframes float {
+  0%   { transform: translate(0, 0) scale(1); }
+  50%  { transform: translate(40px, -30px) scale(1.1); }
+  100% { transform: translate(-20px, 20px) scale(0.95); }
+}
+
+/* ─── Layout ─── */
+#app {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: var(--sp-5) var(--sp-2);
+}
+
+/* ─── Hero ─── */
+.hero {
+  text-align: center;
+  margin-bottom: var(--sp-5);
+  animation: fadeInUp 0.8s var(--ease) both;
+}
+
+.hero__icon {
+  font-size: 3.5rem;
+  margin-bottom: var(--sp-2);
+  filter: drop-shadow(0 0 24px var(--clr-accent-glow));
+}
+
+.hero__title {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--clr-text), var(--clr-accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero__subtitle {
+  margin-top: var(--sp-1);
+  color: var(--clr-text-muted);
+  font-size: 1rem;
+  max-width: 520px;
+  margin-inline: auto;
+}
+
+/* ─── Glass card ─── */
+.glass {
+  background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  box-shadow: var(--shadow-card);
+}
+
+.card {
+  padding: var(--sp-4);
+  margin-bottom: var(--sp-4);
+  animation: fadeInUp 0.8s var(--ease) both;
+  animation-delay: 0.15s;
+}
+
+/* ─── Form grid ─── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--sp-3);
+}
+
+@media (max-width: 560px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── Field ─── */
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--clr-text);
+}
+
+.field .unit {
+  font-weight: 400;
+  color: var(--clr-text-muted);
+  font-size: 0.75rem;
+}
+
+/* Number inputs */
+.field input[type="number"] {
+  appearance: none;
+  -moz-appearance: textfield;
+  width: 100%;
+  padding: var(--sp-1) var(--sp-2);
+  font-family: var(--font-family);
+  font-size: 1rem;
+  color: var(--clr-text);
+  background: var(--clr-surface-alt);
+  border: 1px solid var(--clr-border);
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color var(--duration) var(--ease),
+              box-shadow var(--duration) var(--ease);
+}
+
+.field input[type="number"]:focus {
+  border-color: var(--clr-accent);
+  box-shadow: 0 0 0 3px var(--clr-accent-glow);
+}
+
+.field input[type="number"]::placeholder {
+  color: var(--clr-text-muted);
+  opacity: 0.6;
+}
+
+/* Remove spinner arrows */
+.field input[type="number"]::-webkit-inner-spin-button,
+.field input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* ─── Range slider styling ─── */
+.field input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  background: var(--clr-surface-alt);
+  border: 1px solid var(--clr-border);
+  border-radius: 999px;
+  outline: none;
+  cursor: pointer;
+  transition: background var(--duration) var(--ease);
+}
+
+.field input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--clr-accent);
+  border: 2px solid var(--clr-text);
+  border-radius: 50%;
+  cursor: grab;
+  box-shadow: 0 0 12px var(--clr-accent-glow);
+  transition: transform var(--duration) var(--ease),
+              box-shadow var(--duration) var(--ease);
+}
+
+.field input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 20px var(--clr-accent-glow);
+}
+
+.field input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: var(--clr-accent);
+  border: 2px solid var(--clr-text);
+  border-radius: 50%;
+  cursor: grab;
+  box-shadow: 0 0 12px var(--clr-accent-glow);
+}
+
+.field output {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--clr-accent);
+  text-align: center;
+  min-width: 40px;
+}
+
+/* ─── Primary button ─── */
+.btn-primary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-1);
+  width: 100%;
+  margin-top: var(--sp-4);
+  padding: var(--sp-2) var(--sp-3);
+  font-family: var(--font-family);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--clr-text);
+  background: linear-gradient(135deg, var(--clr-accent), hsl(290, 80%, 55%));
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--duration) var(--ease),
+              box-shadow var(--duration) var(--ease);
+}
+
+.btn-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, hsla(0, 0%, 100%, 0.15));
+  opacity: 0;
+  transition: opacity var(--duration) var(--ease);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px var(--clr-accent-glow);
+}
+
+.btn-primary:hover::before {
+  opacity: 1;
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Button states */
+.btn-loader { display: none; }
+
+.btn-primary.loading .btn-text  { display: none; }
+.btn-primary.loading .btn-loader { display: flex; align-items: center; gap: var(--sp-1); }
+
+/* Spinner */
+.spinner {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  border: 2px solid hsla(0, 0%, 100%, 0.3);
+  border-top-color: var(--clr-text);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Result card ─── */
+.result-card {
+  text-align: center;
+  animation-delay: 0.3s;
+}
+
+.result-card.hidden {
+  display: none;
+}
+
+.result-icon {
+  font-size: 3rem;
+  margin-bottom: var(--sp-2);
+}
+
+.result-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: var(--sp-1);
+}
+
+.result-desc {
+  color: var(--clr-text-muted);
+  margin-bottom: var(--sp-3);
+}
+
+/* Result themes */
+.result-card.high-risk {
+  border-color: var(--clr-danger);
+  background: var(--clr-danger-bg);
+}
+
+.result-card.high-risk .result-title {
+  color: var(--clr-danger);
+}
+
+.result-card.low-risk {
+  border-color: var(--clr-success);
+  background: var(--clr-success-bg);
+}
+
+.result-card.low-risk .result-title {
+  color: var(--clr-success);
+}
+
+/* ─── Progress bar ─── */
+.progress-wrapper {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: var(--sp-1);
+}
+
+.progress-track {
+  width: 100%;
+  height: 12px;
+  background: hsla(0, 0%, 100%, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--clr-success), var(--clr-danger));
+  transition: width 1.2s var(--ease);
+}
+
+/* ─── Footer ─── */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: var(--sp-4) var(--sp-2) var(--sp-6);
+  color: var(--clr-text-muted);
+  font-size: 0.8rem;
+}
+
+footer strong {
+  color: var(--clr-text);
+}
+
+/* ─── Animations ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ─── Utility ─── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
